@@ -1,6 +1,6 @@
 function laguerrePol = makeLaguerrePol (order,xx)
 
-    if(size(xx,1) ==1 ); xx=transpose(xx); end
+    if(size(xx,1) == 1 ); xx=transpose(xx); end
 
     sizex            = size(xx,1);   
     laguerrePol      = zeros(sizex,order);
