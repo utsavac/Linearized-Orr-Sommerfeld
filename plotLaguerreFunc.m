@@ -10,11 +10,12 @@ function plotLaguerreFunc (laguerreFunc,xx)
     color{5} = 'g'; symb{5} = '*';
     color{6} = 'c'; symb{6} = 'h';
     
-    plotNum = size(laguerreFunc,2);
+    plotNum = size(laguerreFunc,3);
+    if(size(xx,1) == 1); xx=transpose(xx); end
     
     for i=1:plotNum
-        plot(laguerreFunc(:,i),xx,sprintf('-%s%s',symb{i},color{i}),...
-            'MarkerIndices',1:100:size(laguerreFunc,1),'linewidth',lw); 
+        plot(laguerreFunc(1,:,i),xx,sprintf('-%s%s',symb{i},color{i}),...
+            'MarkerIndices',1:100:size(laguerreFunc,2),'linewidth',lw); 
         hold on;
     end
     

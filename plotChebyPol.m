@@ -1,4 +1,4 @@
-function plotChebyPol (chebyPol,xx)
+function plotChebyPol (chebyPol,transChebyPol,xx)
 
     lw=1.5; 
     color{1} = 'k'; symb{1} = 'o';
@@ -8,13 +8,14 @@ function plotChebyPol (chebyPol,xx)
     color{5} = 'g'; symb{5} = '*';
     color{6} = 'c'; symb{6} = 'h';
     
-    plotNum = size(chebyPol,2);
+    plotNum = size(chebyPol,3);
     if(size(xx,1) == 1); xx=transpose(xx); end
     
     figure;
+    subplot(1,2,1);
     for i=1:plotNum
-        plot(chebyPol(:,i),xx,sprintf('-%s%s',symb{i},color{i}),...
-            'MarkerIndices',1:100:size(chebyPol,1),'linewidth',lw); 
+        plot(chebyPol(1,:,i),xx,sprintf('-%s%s',symb{i},color{i}),...
+            'MarkerIndices',1:100:size(chebyPol,2),'linewidth',lw); 
         hold on;
     end
     
@@ -23,6 +24,18 @@ function plotChebyPol (chebyPol,xx)
     xlabel('$T_m(y)$','FontSize',16,'interpreter','latex');
     axis([-1.1 1.1 -1 1]);
     legend('m = 0','m = 1','m = 2','m = 3','m = 4','m = 5','m = 6');
-    title('Chebyshev Polynomials','FontSize',17,'FontWeight','Normal');
+    %title('Chebyshev Polynomials','FontSize',17,'FontWeight','Normal');
+    
+    subplot(1,2,2);
+    for i=1:plotNum-2
+        plot(transChebyPol(1,:,i),xx,sprintf('-%s%s',symb{i},color{i}),...
+            'MarkerIndices',1:100:size(transChebyPol,2),'linewidth',lw); 
+        hold on;
+    end
+    
+    hold off; grid on;
+    ylabel('$y$','FontSize',16,'interpreter','latex'); 
+    xlabel('$\hat{T}_m(y)$','FontSize',16,'interpreter','latex');
+    axis([-2.1 2.1 -1 1]);
     
 end

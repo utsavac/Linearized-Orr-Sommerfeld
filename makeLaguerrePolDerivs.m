@@ -1,30 +1,25 @@
-function [laguerrePol1,laguerrePol2] = ...
-    makeLaguerrePolDerivs(laguerrePol,nodes)
-
-    laguerrePol1 = zeros(size(laguerrePol,1),size(laguerrePol,2));
-    laguerrePol2 = zeros(size(laguerrePol,1),size(laguerrePol,2));
+function laguerrePol = makeLaguerrePolDerivs(laguerrePol,nodes)
     
-    % First Derivative...
-    for k=1:size(laguerrePol,1)
-        laguerrePol1(k,2) = -1;
-        for i=3:size(laguerrePol,2)
-            if(i>2)
-                laguerrePol1(k,i) = ( (2*(i-1)-nodes(k,1)-1)*...
-                    laguerrePol1(k,i-1) - laguerrePol(k,i-1) - ...
-                    (i-2)*laguerrePol1(k,i-2) ) / (i-1);
+    % First four derivatives...
+    for ideriv = 1:4
+        for k = 1:size(laguerrePol,2)
+            for i=1:size(laguerrePol,3)
+                
+                if(ideriv==1)
+                    laguerrePol(ideriv+1,k,2) = -1;
+                    offset = 2;
+                else
+                    offset = ideriv;
+                end
+                
+                if(i>offset)
+                    laguerrePol(ideriv+1,k,i) = ( (2*(i-1)-nodes(k,1)-1)*...
+                        laguerrePol(ideriv+1,k,i-1) - ...
+                        ideriv*laguerrePol(ideriv,k,i-1) -...
+                        (i-2)*laguerrePol(ideriv+1,k,i-2) ) / (i-1);
+                end
             end
         end
     end
     
-    % Second Derivative...
-    for k=1:size(laguerrePol,1)
-        for i=1:size(laguerrePol,2)
-            if(i>2)
-                laguerrePol2(k,i) = ( (2*(i-1)-nodes(k,1)-1)*...
-                    laguerrePol2(k,i-1) - 2*laguerrePol1(k,i-1) - ...
-                    (i-2)*laguerrePol2(k,i-2) ) / (i-1);
-            end
-        end
-    end
-
 end

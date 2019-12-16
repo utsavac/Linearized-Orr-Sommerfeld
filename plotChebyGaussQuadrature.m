@@ -9,7 +9,9 @@ function plotChebyGaussQuadrature ( order )
     
     num = size(order,1);
     
-    for i=1:num; gaussQuad(i).data = makeChebyGQNodes(order(i,1)); end
+    for i=1:num
+        [gaussQuad(i).data,rand] = makeChebyGQNodesWeights(order(i,1)); 
+    end
     for i=1:num; x(i).data = i*ones(order(i)+1); end
     
     figure;

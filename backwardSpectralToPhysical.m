@@ -1,10 +1,14 @@
-function physical = backwardSpectralToPhysical(spectral,basisFunc)
+function physical = backwardSpectralToPhysical(spectral,basisFunc,veldir)
 
-    physical = zeros(size(spectral,1),1);
-    for i=1:size(spectral,1)
-        for j=1:size(spectral,2)
-            physical(i,1) = physical(i,1) + spectral(i,j)*basisFunc(i,j);
+    basisFunc1(:,:) = basisFunc(1,:,:);
+    
+    physical = zeros(size(basisFunc1,1),size(spectral,2));
+    for i = 1:size(spectral,2)
+        if(veldir == 1)
+            physical(:,i) = basisFunc1 * real(spectral(:,i));
+        elseif(veldir == 2)
+            physical(:,i) = basisFunc1 * imag(spectral(:,i));
         end
-    end           
+    end
 
 end
